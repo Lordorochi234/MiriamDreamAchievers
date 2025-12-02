@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hope & Empowerment Foundation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2d8659;
+            --secondary-color: #f1c40f;
+            --accent-color: #27ae60;
+            --text-dark: #333;
+            --text-light: #fff;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #2d8659, #1a5c3a);
+            color: var(--text-light);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%232d8659" width="1200" height="600"/><circle cx="200" cy="150" r="100" fill="%23f1c40f" opacity="0.3"/><circle cx="900" cy="400" r="150" fill="%2327ae60" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 70px;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #d4af37;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 1rem auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-image img{
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+        
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Mission Cards */
+        .mission-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mission-card {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .mission-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            background: var(--bg-light);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 300px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInScale 0.6s ease-out forwards;
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-photo {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            overflow: hidden;          
+        }
+        .team-photo img{
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        
+        }
+
+        .team-photo::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .team-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .team-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-info p {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* Get Involved Section */
+        .get-involved {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-align: center;
+        }
+
+        .get-involved .section-title {
+            color: white;
+        }
+
+        .get-involved .section-title::after {
+            background: white;
+        }
+
+        .involvement-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .involvement-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: background 0.3s;
+        }
+
+        .involvement-card:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: linear-gradient(135deg, #2d8659, #1a5c3a);
+                width: 100%;
+                text-align: center;
+                transition: left 0.3s;
+                padding: 2rem 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .about-text p {
+                font-size: 0.95rem;
+            }
+
+            .mission-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .team-info h3 {
+                font-size: 1.1rem;
+            }
+
+            .cta-button {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Miriam Dream Achievers</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#about" onclick="closeMenu()">About</a></li>
+                <li><a href="#mission" onclick="closeMenu()">Mission</a></li>
+                <li><a href="#gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="#team" onclick="closeMenu()">Team</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Empowering Lives, Building Futures</h1>
+                <p>Supporting orphans, vulnerable children, widows, and youth</p>
+                <a href="#contact" class="cta-button">Get Involved</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>This is a community organization based in Homabay County , Kasipul Consituency in Kenya. It was established in 2021 to advocate for orphans, and vulnerable children, widows and youth empowerment.</p>
+                    <p>Since its inception, it has engded in various programs addressing the rights of children such us education and socio-economic empowerment of youth and widows, benefiting over 200 children through Early Childhood Development, sponsorship, and mentorship. </p>
+                    <p>We have established ECDE center called <b><i>MIRIAMS DREAM ACADEMY</i></b> for safe learning environment for orphans and vulnerable children</p>
+                    <p>The organization seeks support for its ongoing programs and aims to create a conducive environment for children and less fortune families to excel in their unique abolities</p>
+                </div>
+                <div class="about-image">
+                    <img src="./gallery/IMG-20251123-WA0010.jpg" loading="lazy" alt="">
+                    <span>Our Impact Matters</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="mission">
+            <h2 class="section-title">Our Mission Areas</h2>
+            <div class="mission-cards">
+                <article class="mission-card">
+                    <h3>🏠 Orphan Care</h3>
+                    <p>Providing shelter, education, and emotional support to orphaned children, ensuring they grow up in a loving environment.</p>
+                </article>
+                <article class="mission-card">
+                    <h3>👶 Vulnerable Children</h3>
+                    <p>Supporting children at risk through nutrition programs, healthcare, and educational scholarships.</p>
+                </article>
+                <article class="mission-card">
+                    <h3>💪 Widow Support</h3>
+                    <p>Empowering widows through skills training, microfinance, and community support networks.</p>
+                </article>
+                <article class="mission-card">
+                    <h3>🎓 Youth Empowerment</h3>
+                    <p>Equipping young people with vocational training, mentorship, and entrepreneurship opportunities.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery">
+            <h2 class="section-title">Our Work in Action</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="./gallery/Children-Education.jpg">
+                    <div class="gallery-overlay">
+                        <h3>Education Program</h3>
+                        <p>Empowering through learning</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./gallery/Donate-Food-For-The-Poor-People-In_.jpg" loading="lazy" alt="nutrition support photo">
+                    <div class="gallery-overlay">
+                        <h3>Nutrition Support</h3>
+                        <p>Ensuring healthy meals daily</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./gallery/Skills-training.jpg" loading="lazy" alt="skills training">
+                    <div class="gallery-overlay">
+                        <h3>Vocational Training</h3>
+                        <p>Building sustainable futures</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./gallery/Community-outreach.jpg" loading="lazy" alt="Community Outreach">
+                    <div class="gallery-overlay">
+                        <h3>Community Events</h3>
+                        <p>Building stronger communities</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./gallery/Healthcare-support.jpg" loading="lazy" alt="Healthcare Support">
+                    <div class="gallery-overlay">
+                        <h3>Medical Care</h3>
+                        <p>Access to quality healthcare</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./gallery/IMG-20251123-WA0013.jpg" alt="Youth Mentorship">
+                    <div class="gallery-overlay">
+                        <h3>Mentorship Program</h3>
+                        <p>Guiding the next generation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team">
+            <h2 class="section-title">Our Leadership Team</h2>
+            <div class="team-grid">
+                <article class="team-member">
+                    <div class="team-photo team-photo1">
+                        <img src="./gallery/PROJECTMANAGER.jpg" loading="lazy" alt="Project manager">
+                    </div>
+                    <div class="team-info">
+                        <h3>Ndagire Otieno</h3>
+                        <p>Project Manager</p>
+                    </div>
+                </article>
+                <article class="team-member">
+                    <div class="team-photo team-photo2">
+                        <img src="./gallery/CHAIRPERSON.jpg" loading="lazy" alt="Chair person">
+                    </div>
+                    <div class="team-info">
+                        <h3>John Ochiel</h3>
+                        <p>Chairperson</p>
+                    </div>
+                </article>
+                <article class="team-member">
+                    <div class="team-photo team-photo3">
+                        <img src="./gallery/ORGANISINGSECRETATRY.jpg" loading="lazy" alt="Organizing secretary">
+                    </div>
+                    <div class="team-info">
+                        <h3>Barak Juma</h3>
+                        <p>Organizing Secretary</p>
+                    </div>
+                </article>
+                <article class="team-member">
+                    <div class="team-photo team-photo4">
+                        <img src="./gallery/PROJECTCOORDINATOR.jpg" loading="lazy" alt="Project coordinator">
+                    </div>
+                    <div class="team-info">
+                        <h3>Kepha Esther</h3>
+                        <p>Project Coordinator</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="get-involved" class="get-involved">
+            <h2 class="section-title">Get Involved</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Join us in making a difference in the lives of those who need it most</p>
+            <div class="involvement-options">
+                <div class="involvement-card">
+                    <h3>💝 Donate</h3>
+                    <p>Your contributions directly support our programs</p>
+                </div>
+                <div class="involvement-card">
+                    <h3>🤝 Volunteer</h3>
+                    <p>Share your time and skills with our community</p>
+                </div>
+                <div class="involvement-card">
+                    <h3>🤗 Sponsor</h3>
+                    <p>Change a child's life through sponsorship</p>
+                </div>
+                <div class="involvement-card">
+                    <h3>📢 Advocate</h3>
+                    <p>Spread awareness about our mission</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-title">Contact Us</h2>
+            <div style="text-align: center; font-size: 1.1rem;">
+                <p><strong>Email:</strong>miriamsdreamachievers@gmail.com</p>
+                <p><strong>Phone:</strong> +254 712777368, +254 724295770</p>
+                <p><strong>Address:</strong> Homabay, Kenya</p>
+                <div style="margin-top: 2rem;">
+                    <a href="#" class="cta-button">Send Us a Message</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <p>We are committed to creating lasting change in the lives of orphans, vulnerable children, widows, and youth.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#about" style="color: white; text-decoration: none;">About Us</a></p>
+                <p><a href="#mission" style="color: white; text-decoration: none;">Our Mission</a></p>
+                <p><a href="#team" style="color: white; text-decoration: none;">Our Team</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <p>Follow us on social media</p>
+                <p>Facebook | Twitter | Instagram</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 <b>911devs</b>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
